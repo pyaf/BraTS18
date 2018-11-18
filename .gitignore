@@ -1,0 +1,13 @@
+experiments/unused
+done
+tmp
+build
+*.egg-info
+*.so
+*.png
+*.sh
+output
+submissions
+ckpts
+__pycache__
+*.pyc

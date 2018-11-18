@@ -1,0 +1,17 @@
+# root is data directory, data_dir is training data dir, test_data_dir is validation data directory
+root: /root/data/
+data_dir: /root/data/MICCAI_BraTS_2018_Data_Training/
+test_data_dir: /root/data/MICCAI_BraTS_2018_Data_Validation/
+train_dir: /root/code/ckpts
+sample_size: 25
+sub_sample_size: 19
+target_size: 9
+
+
+# root: /home/eee/ug/15084015/GE/BraTS18/
+# data_dir: /home/eee/ug/15084015/GE/BraTS18/MICCAI_BraTS_2018_Data_Training/
+# test_data_dir: /home/eee/ug/15084015/GE/BraTS18/MICCAI_BraTS_2018_Data_Validation/
+# train_dir: /home/eee/ug/15084015/GE/BraTS2018-tumor-segmentation/ckpts
+# sample_size: 25
+# sub_sample_size: 19
+# target_size: 9

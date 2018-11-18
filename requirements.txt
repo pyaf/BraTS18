@@ -1,0 +1,10 @@
+nipype 
+natsort 
+SimpleITK 
+pyyaml 
+nibabel 
+pydicom 
+medpy 
+cython 
+sklearn 
+tqdm
