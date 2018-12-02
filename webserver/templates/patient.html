@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% block content %}
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2"></div>
+      <div class="col-lg-8">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a href="" data-target="#scans" data-toggle="tab" class="nav-link">Scans</a>
+          </li>
+          <li class="nav-item">
+            <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Edit</a>
+          </li>
+        </ul>
+        <div class="tab-content py-4">
+          <div class="tab-pane active" id="profile">
+            <h5 class="mb-3">Patient Profile</h5>
+            <div class="row">
+              <div class="col-md-6">
+                <h6><b>About:</b></h6>
+                <p>
+                  {{patient.name}}, {{patient.age}}, {{patient.gender}}
+                </p>
+                <h6><b>Description:</b></h6>
+                <p>
+                  {{patient.description}}
+                </p>
+                <h6><b>Address:</b></h6>
+                <p>
+                  {{patient.mobile_number}} <br>
+                  {{patient.address}}
+                </p>
+              </div>
+              <div class="col-md-6">
+                <img src="/files/{{patient.picture}}" width="100" height="100" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+                <!-- <h6 class="mt-2">Upload a different photo</h6>
+                <label class="custom-file">
+                  <input type="file" id="file" class="custom-file-input">
+                  <span class="custom-file-control">Choose file</span>
+                </label> -->
+              </div>
+              <div class="col-md-12">
+                <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span> Recent Activity</h5>
+                <table class="table table-sm table-hover table-striped">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <strong>Abby</strong> joined ACME Project Team in <strong>`Collaboration`</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Gary</strong> deleted My Board1 in <strong>`Discussions`</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Kensington</strong> deleted MyBoard3 in <strong>`Discussions`</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>John</strong> deleted My Board1 in <strong>`Discussions`</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Skell</strong> deleted his post Look at Why this is.. in <strong>`Discussions`</strong>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!--/row-->
+          </div>
+          <div class="tab-pane" id="scans">
+            {% for scan in scans %}
+            {{scan.uploaded_at}}: {{scan.description}} <br>
+
+            {%endfor%}
+
+        <h4>Upload new scan</h4>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="custom-file">
+            <label class="custom-file-label" for="fileUpload">     <i class="fa fa-cloud-upload"></i> Choose file</label>
+            <input type="file" id="fileUpload" name="scan"  class="custom-file-input">
+            <p id="filename"></p>
+            <label class="form-control-label" >Description</label>
+            <textarea type="text" name="description"  class="form-control"></textarea> <br>
+            <button type="submit" class="btn btn-success">Upload</button>
+          </div>
+        </form>
+
+          </div>
+          <div class="tab-pane" id="edit">
+            <form role="form">
+              <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Name</label>
+                <div class="col-lg-9">
+                  <input class="form-control" type="text" value="{{patient.name}}" name="name">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                <div class="col-lg-9">
+                  <input class="form-control" type="email" value="{{patient.email}}" name="email">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Age</label>
+                <div class="col-lg-9">
+                  <input class="form-control" type="text" value="{{patient.age}}" name="age">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Gender</label>
+                <div class="col-lg-9">
+                  <input class="form-control" type="url" value="{{patient.gender}}" name="gender">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Address</label>
+                <div class="col-lg-9">
+                  <input class="form-control" type="text" value="{{patient.address}}" placeholder="Address" name="address">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Mobile Number</label>
+                <div class="col-lg-9">
+                  <input class="form-control" type="number" value="{{patient.mobile_number}}" placeholder="Mobile Number" name="mobile_number">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Description</label>
+                <div class="col-lg-9">
+                  <textarea class="form-control" type="text" value="{{patient.description}}" placeholder="Description" name="description"></textarea>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label"></label>
+                <div class="col-lg-9">
+                  <input type="reset" class="btn btn-secondary" value="Cancel">
+                  <input type="button" class="btn btn-primary" value="Save Changes">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+
+  <script type="text/javascript">
+
+    $(function()
+    {
+        $('#fileUpload').on('change',function ()
+        {
+            $("#filename").html($('#fileUpload')[0].files[0].name);
+        });
+    });
+
+</script>
+
+{% endblock %}
