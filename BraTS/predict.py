@@ -73,10 +73,11 @@ def main():
     # setup networks
     Network = getattr(models, args.net)
     model = Network(**args.net_params)
-    model = model.cuda()
+    if torch.cuda.is_available():
+        model = model.cuda()
 
     model_file = os.path.join(ckpts, args.ckpt)
-    checkpoint = torch.load(model_file)
+    checkpoint = torch.load(model_file, map_location=lambda storage, loc: storage)
     model.load_state_dict(checkpoint["state_dict"])
 
     Dataset = getattr(datasets, args.dataset)
@@ -255,7 +256,7 @@ if __name__ == "__main__":
 
     # parser.add_argument('-cfg', '--cfg', default='deepmedic_ce_50_50_all', type=str)
     parser.add_argument("-cfg", "--cfg", default="deepmedic_ce_50_50_fold0", type=str)
-    parser.add_argument("-gpu", "--gpu", default="0", type=str)
+    parser.add_argument("-gpu", "--gpu", default="", type=str)
 
     args = parser.parse_args()
     args = Parser(args.cfg, log="test").add_args(args)

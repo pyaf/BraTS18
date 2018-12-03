@@ -35,6 +35,7 @@ def get_dist2center(patch_shape):
 
 
 def process(path, has_label=True):
+    import pdb; pdb.set_trace()
     label = np.array(nib_load(path + "seg.nii.gz"), dtype="uint8", order="C")
 
     images = np.stack(
@@ -136,19 +137,21 @@ def doit(dset):
         process(path, has_label)
 
 
-# train
-train_set = {"root": args.data_dir, "flist": "all.txt", "has_label": True}
-####
+if __name__ == '__main__':
 
-# test/validation data
-test_set = {
-    "root": args.test_data_dir,  #'/home/thuyen/Data/brats17/Brats17ValidationData',
-    "flist": "test.txt",
-    "has_label": False,
-}
+    # train
+    train_set = {"root": args.data_dir, "flist": "all.txt", "has_label": True}
+    ####
 
-doit(train_set)
-doit(test_set)
+    # test/validation data
+    test_set = {
+        "root": args.test_data_dir,  #'/home/thuyen/Data/brats17/Brats17ValidationData',
+        "flist": "test.txt",
+        "has_label": False,
+    }
+
+    doit(train_set)
+    doit(test_set)
 
 # benchmarking the data reading
 # load f32 is faster (0.2s) than load i16 (0.7s)

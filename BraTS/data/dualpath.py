@@ -538,4 +538,5 @@ if __name__ == "__main__":
     print("train_loader is ready!..")
     for i, (data, label) in enumerate(train_loader, args.start_iter):
         print(type(data), type(label))
+        import pdb; pdb.set_t
         exit()

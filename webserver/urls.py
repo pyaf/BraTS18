@@ -26,7 +26,7 @@ from . import settings
 urlpatterns = [
     path("", include("base.urls")),
     path("admin/", admin.site.urls),
-    url(r"^logout/$", auth_views.LogoutView.as_view()),
+    # url(r"^logout/$", auth_views.LogoutView.as_view()),
 ]
 
 if settings.DEBUG:
