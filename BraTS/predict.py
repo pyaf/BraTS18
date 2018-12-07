@@ -10,6 +10,7 @@ import torch.nn.functional as F
 import torch.backends.cudnn as cudnn
 from torch.utils.data import DataLoader
 import torch.optim
+from tqdm import tqdm
 
 cudnn.benchmark = True
 
@@ -138,7 +139,7 @@ def validate(
 
     vals = AverageMeter()
     for i, (data, labels) in enumerate(valid_loader):
-        pdb.set_trace()
+        # pdb.set_trace()
         y = labels.cuda(non_blocking=True)
         data = [t.cuda(non_blocking=True) for t in data]
         x, coords = data[:2]
@@ -153,7 +154,7 @@ def validate(
 
         sample_loss = AverageMeter() if scoring and criterion is not None else None
 
-        for b, coord in enumerate(coords.split(batch_size)):
+        for b, coord in tqdm(enumerate(coords.split(batch_size))):
             x1 = multicrop.crop3d_gpu(
                 x, coord, sample_size, sample_size, sample_size, 1, True
             )
@@ -196,10 +197,10 @@ def validate(
             msg += "{:>20}, ".format(name)
 
         if out_dir:
-            # np.save(os.path.join(out_dir, name + '_preds'), outputs)  # to save in .npy format
-            preds = outputs.argmax(0).astype("uint8")
-            img = nib.Nifti1Image(preds, None)
-            nib.save(img, os.path.join(out_dir, name + "_preds.nii.gz"))
+            np.save(os.path.join(out_dir, name + '_preds'), outputs)  # to save in .npy format
+            # preds = outputs.argmax(0).astype("uint8")
+            # img = nib.Nifti1Image(preds, None)
+            # nib.save(img, os.path.join(out_dir, name + "_preds.nii.gz"))
 
         if scoring:
             labels = labels.numpy()
@@ -256,7 +257,7 @@ if __name__ == "__main__":
 
     # parser.add_argument('-cfg', '--cfg', default='deepmedic_ce_50_50_all', type=str)
     parser.add_argument("-cfg", "--cfg", default="deepmedic_ce_50_50_fold0", type=str)
-    parser.add_argument("-gpu", "--gpu", default="", type=str)
+    parser.add_argument("-gpu", "--gpu", default="0", type=str)
 
     args = parser.parse_args()
     args = Parser(args.cfg, log="test").add_args(args)
@@ -265,9 +266,9 @@ if __name__ == "__main__":
     # args.saving = False
 
     args.data_dir: "/home/eee/ug/15084015/GE/data/MICCAI_BraTS_2018_Data_Training/"
-    args.valid_list = "valid_0.txt"
-    args.saving = False
-    args.scoring = not args.saving
+    args.valid_list = "train_0.txt"
+    args.saving = True
+    args.scoring = False
 
     args.ckpt = "model_last.tar"
     # args.ckpt = 'model_iter_227.tar'

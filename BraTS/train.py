@@ -46,9 +46,10 @@ args = Parser(args.cfg, log="train").add_args(args)
 args.gpu = str(args.gpu)
 
 ckpts = args.makedir()
-resume = os.path.join(ckpts, "model_last.tar")
+resume = os.path.join(ckpts, "model_epoch_99.tar")
 if not args.resume and os.path.exists(resume):
     args.resume = resume
+print(args.resume)
 
 
 def main():

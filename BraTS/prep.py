@@ -35,7 +35,9 @@ def get_dist2center(patch_shape):
 
 
 def process(path, has_label=True):
-    import pdb; pdb.set_trace()
+    import pdb
+
+    pdb.set_trace()
     label = np.array(nib_load(path + "seg.nii.gz"), dtype="uint8", order="C")
 
     images = np.stack(
@@ -137,7 +139,7 @@ def doit(dset):
         process(path, has_label)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     # train
     train_set = {"root": args.data_dir, "flist": "all.txt", "has_label": True}
