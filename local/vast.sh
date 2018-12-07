@@ -16,9 +16,7 @@ cd ..
 pip install -r requirements.txt
 
 git clone https://github.com/thuyen/multicrop.git
-cd multicrop
-python setup.py install
-cd ..
+cd multicrop && python setup.py install && cd ..
 
 python split.py
 python prep.py  # takes about 10 mins on 12 core CPU
