@@ -167,12 +167,12 @@ def main():
         if len(data) > 2:  # has mask
             x = add_mask(x, data.pop(), 1)
 
-        logging.info(x.shape)
-        logging.info(torch.max(x))
-        logging.info(torch.min(x))
-        logging.info(target.shape)
-        logging.info(torch.max(target))
-        logging.info(torch.min(target))
+        # logging.info(x.shape)
+        # logging.info(torch.max(x))
+        # logging.info(torch.min(x))
+        # logging.info(target.shape)
+        # logging.info(torch.max(target))
+        # logging.info(torch.min(target))
 
         # compute output
         output = model(x)  # nx5x128x128x128, target nx128x128x128

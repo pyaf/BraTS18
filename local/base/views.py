@@ -56,9 +56,10 @@ def postScan(scan):
             print("Error in posting scans")
 
 
-def itkSnap(request, scan_id):
+def itkSnap(request, patient_id, scan_id):
     if request.user.is_authenticated:
-        scan = Scan.objects.get(scan_id=scan_id)
+        patient = Patient.objects.get(id=patient_id)
+        scan = Scan.objects.get(patient=patient, scan_id=scan_id)
         patient_id = scan.patient.id
         scan_id = scan.scan_id
         file = glob("files/scans/%s/%s/*t1ce.nii.gz" % (patient_id, scan_id))[0]
@@ -159,6 +160,34 @@ def editPatientProfile(request):
     except Exception as e:
         print(e)
         return redirect("/")
+
+
+def newPatient(request):
+    if request.method == "POST":
+        print(request.POST)
+        print(request.FILES)
+        # pdb.set_trace()
+        doctor = request.user
+        name = request.POST['name']
+        gender = request.POST['gender']
+        age = request.POST['age']
+        mobile_number = request.POST['mobile_number']
+        description = request.POST['description']
+        picture = request.FILES['picture']
+        email = request.POST['email']
+        patient = Patient.objects.create(
+            doctor=doctor,
+            name=name,
+            gender=gender,
+            age=age,
+            mobile_number=mobile_number,
+            description=description,
+            picture=picture,
+            email=email
+            )
+        print(patient)
+        return redirect('/')
+    return render(request, 'new_patient.html')
 
 
 @login_required(login_url="/login")

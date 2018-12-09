@@ -3,7 +3,7 @@
 # # The directory of brats2018 validation dataset
 # brats2018_validation_dir = "/home/eee/ug/15084015/GE/data/MICCAI_BraTS_2018_Data_Validation/"
 # # The directory of brats2018 testing dataset
-# # brats2018_testing_dir = "/media/pkao/Dataset/BraTS2018/testing"
+# brats2018_testing_dir = ""
 
 # # The directory of the predicted lesions for training dataset
 # brats2018_training_predicted_lesions_dir = "/home/eee/ug/15084015/GE/code/BraTS/output/deepmedic_ce_50_50_fold0/train_0/"
@@ -27,7 +27,7 @@ brats2018_training_dir = "/media/ags/CODE/GE/data/MICCAI_BraTS_2018_Data_Trainin
 # The directory of brats2018 validation dataset
 brats2018_validation_dir = "/media/ags/CODE/GE/data/MICCAI_BraTS_2018_Data_Validation/"
 # The directory of brats2018 testing dataset
-# brats2018_testing_dir = "/media/pkao/Dataset/BraTS2018/testing"
+brats2018_testing_dir = ""
 
 # The directory of the predicted lesions for training dataset
 brats2018_training_predicted_lesions_dir = "/media/ags/CODE/GE/code/BraTS/output/deepmedic_ce_50_50_fold0/train_0/"

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/patient_profile.css">
+{% endblock %}
+{% block content %}
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-10">
+        <h4>Add new patient</h4>
+        <div class="tab-content py-4">
+          <div>
+            <form role="form" method="POST" action="" enctype="multipart/form-data">
+              {%csrf_token%}
+              <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Name</label>
+                <div class="col-lg-9">
+                  <input class="form-control" placeholder="Name" type="text" name="name">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                <div class="col-lg-9">
+                  <input class="form-control" placeholder="Email" type="email" name="email">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Age</label>
+                <div class="col-lg-9">
+                  <input class="form-control" placeholder="Age" type="number"  name="age">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Gender</label>
+                <div class="col-lg-9">
+                  <input class="form-control" type="text"  name="gender">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Address</label>
+                <div class="col-lg-9">
+                  <input class="form-control" type="text"  placeholder="Address" name="address">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Mobile Number</label>
+                <div class="col-lg-9">
+                  <input class="form-control" type="number"placeholder="Mobile Number" name="mobile_number">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Description</label>
+                <div class="col-lg-9">
+                  <input class="form-control" type="textarea" placeholder="Description" name="description">
+                </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-lg-3 col-form-label form-control-label">Profile picture (optional)</label>
+                <div class="col-lg-9">
+                  <label class="custom-file-label" for="fileUpload">Choose</label>
+              <input type="file" id="fileUpload" name="picture"  class="custom-file-input">
+                <p id="filename"></p>
+                  
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label"></label>
+                <div class="col-lg-9">
+                  <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+    $(function(){
+    $('#fileUpload').on('change',function (){
+      $("#filename").html($('#fileUpload')[0].files[0].name);
+      });
+  });
+</script>
+
+{% endblock %}

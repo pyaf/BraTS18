@@ -10,3 +10,6 @@ submissions
 ckpts
 __pycache__
 *.pyc
+*.npy
+*.nii.gz
+*.zip

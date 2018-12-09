@@ -121,3 +121,8 @@ if N4BiasFieldCorrection
 
 https://github.com/ANTsX/ANTs/wiki/Compiling-ANTs-on-Linux-and-Mac-OS
 clone Ant, create ~/bin/ants, ccmake ~/code/ANTs, make, make 
+
+
+## setting up dsistudio
+
+http://www.nemotos.net/?p=1878

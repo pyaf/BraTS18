@@ -27,8 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-DL_SERVER = "http://localhost:6006/"
-# DL_SERVER = "http://13.126.97.91:6006/"
+# DL_SERVER = "http://localhost:6006/"
+DL_SERVER = "http://13.126.97.91:6006/"
 
 
 # Application definition

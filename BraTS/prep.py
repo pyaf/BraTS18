@@ -5,6 +5,7 @@ import numpy as np
 import nibabel as nib
 from utils import Parser
 import time
+from multiprocessing import Pool
 
 args = Parser()
 
@@ -34,10 +35,12 @@ def get_dist2center(patch_shape):
     return dist2center
 
 
-def process(path, has_label=True):
+def process(args):
+    path, has_label = args
+    print('processing:', path)
     import pdb
 
-    pdb.set_trace()
+    # pdb.set_trace()
     label = np.array(nib_load(path + "seg.nii.gz"), dtype="uint8", order="C")
 
     images = np.stack(
@@ -133,10 +136,13 @@ def doit(dset):
     file_list = os.path.join(root, dset["flist"])
     subjects = open(file_list).read().splitlines()
     names = [sub.split("/")[-1] for sub in subjects]
-    paths = [os.path.join(root, sub, name + "_") for sub, name in zip(subjects, names)]
+    paths = [(os.path.join(root, sub, name + "_"), has_label) for sub, name in zip(subjects, names)]
     print("Preparing data for %s" % root)
-    for path in tqdm(paths):
-        process(path, has_label)
+    pool = Pool(30)
+    pool.map(process, paths)
+
+    # for path in tqdm(paths):
+    #     process(path, has_label)
 
 
 if __name__ == "__main__":
@@ -152,7 +158,7 @@ if __name__ == "__main__":
         "has_label": False,
     }
 
-    doit(train_set)
+    # doit(train_set)
     doit(test_set)
 
 # benchmarking the data reading

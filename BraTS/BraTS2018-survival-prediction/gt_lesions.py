@@ -126,12 +126,13 @@ def Lesions2SegMNI152(
     necrosis_mni_path, edema_mni_path, enhancing_tumor_path, subject_id
 ):
     """This code maps the lesion probability maps into lesion masks in MNI152"""
-    assert (
-        SubjectID(necrosis_mni_path)
-        == SubjectID(edema_mni_path)
-        == SubjectID(enhancing_tumor_path)
-        == subject_id
-    ), "Subject Mismatch!!!"
+    # import pdb; pdb.set_trace()
+    # assert (
+    #     SubjectID(necrosis_mni_path)
+    #     == SubjectID(edema_mni_path)
+    #     == SubjectID(enhancing_tumor_path)
+    #     == subject_id
+    # ), "Subject Mismatch!!!"
     mni152_path = os.path.join(
         necrosis_mni_path[: FindOneElement(necrosis_mni_path, "/")[-2]], "MNI152"
     )
@@ -204,6 +205,7 @@ def Lesions2SegMNI152(
     assert (
         np.amax(enhancing_tumor_mask_mni_nda) <= 1
     ), "Maximum of enhancing tumor mask not equal to 1"
+    print(enhancing_tumor_mask_mni_name)
     sitk.WriteImage(enhancing_tumor_mask_mni_img, enhancing_tumor_mask_mni_name)
 
 
@@ -217,7 +219,7 @@ refVol = paths.mni152_1mm_path
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
-    "-t", "--thread", help="the number of thread you want to use ", default=8, type=int
+    "-t", "--thread", help="the number of thread you want to use ", default=4, type=int
 )
 args = parser.parse_args()
 
@@ -227,29 +229,30 @@ bratsPath = paths.brats2018_training_dir
 pool = Pool(args.thread)
 
 # The following two lines work on spliting seg into individual lesion label
-t1_filepaths, t1c_filepaths, t2_filepaths, flair_filepaths, seg_filepaths = Brats2018TrainingN4ITKFilePaths(
-    bratsPath
-)
-pool.map(Seg2Lesions, seg_filepaths)
+# t1_filepaths, t1c_filepaths, t2_filepaths, flair_filepaths, seg_filepaths = Brats2018TrainingN4ITKFilePaths(
+#     bratsPath
+# )
+# pool.map(Seg2Lesions, seg_filepaths)
 
-# The following four lines work on mapping these individual lesion label into MNI152 space
-necrosis_paths, edema_paths, enhancing_tumor_paths = Brats2018GTLesionsPaths(bratsPath)
-omat = [
-    os.path.join(root, name)
-    for root, dirs, files in os.walk(bratsPath)
-    for name in files
-    if "invol2refvol" in name and name.endswith(".mat")
-]
-omat.sort()
-pool.map(
-    Lesions2MNI152_star, zip(necrosis_paths, edema_paths, enhancing_tumor_paths, omat)
-)
+# # The following four lines work on mapping these individual lesion label into MNI152 space
+# necrosis_paths, edema_paths, enhancing_tumor_paths = Brats2018GTLesionsPaths(bratsPath)
+# omat = [
+#     os.path.join(root, name)
+#     for root, dirs, files in os.walk(bratsPath)
+#     for name in files
+#     if "invol2refvol" in name and name.endswith(".mat")
+# ]
+# omat.sort()
+# pool.map(
+#     Lesions2MNI152_star, zip(necrosis_paths, edema_paths, enhancing_tumor_paths, omat)
+# )
 
 # The following three lines merge the individual lesion label to segmentation mask in MNI152 space
 necrosis_prob_mni_paths, edema_prob_mni_paths, enhancing_tumor_prob_paths = Brats2018GTLesionsProbMapMNI152Paths(
     bratsPath
 )
 all_training_ids = AllSubjectID(dataset_type="training")
+pool = Pool(args.thread)
 pool.map(
     Lesions2SegMNI152_star,
     zip(

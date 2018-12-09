@@ -9,6 +9,5 @@ install requirements with `pip install -r requirements.txt`
 4. Add crontab: `python manage.py crontab add`
 The website is very basic as of now. Only login/logout feature and a upload function it needs to be integrated with the segmentation code and rest of the features need to be implemented.
 
-## setting up dsistudio
 
-http://www.nemotos.net/?p=1878
+grep CRON /var/log/syslog

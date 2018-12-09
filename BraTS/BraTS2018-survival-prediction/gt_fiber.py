@@ -8,30 +8,32 @@ import csv
 
 
 def survival_subject_name(data_path):
+    # print(data_path )
     survival_file = [
         os.path.join(root, name)
         for root, dirs, files in os.walk(data_path)
         for name in files
         if name.endswith("csv")
     ]
-
+    # print(survival_file)
     survival_name = []
     with open(survival_file[0], "rt") as csv_file:
         csv_reader = csv.reader(csv_file)
         for line in csv_reader:
-            if "test" in data_path or "valid" in data_path:
+            # print(line)
+            if "test" in data_path.lower() or "valid" in data_path.lower():
                 if line[2] == "GTR":
                     survival_name.append(line[0])
-            if "train" in data_path:
+            if "train" in data_path.lower():
                 if line[3] == "GTR":
                     survival_name.append(line[0])
-
+    # print(survival_name)
     return survival_name
 
 
 def MoveLesionsMNIMask(brats_root, dst_dir, subject_names):
     """ This function moves the whole tumor mask in MNI152 to the working directory for dsi studio"""
-
+    # print(brats_root, dst_dir, subject_names)
     for subject_name in subject_names:
         whole_tumor_mni_path = [
             os.path.join(root, name)
@@ -45,6 +47,7 @@ def MoveLesionsMNIMask(brats_root, dst_dir, subject_names):
         src = whole_tumor_mni_path[0]
         whole_tumor_mni_file = os.path.split(whole_tumor_mni_path[0])[1]
         dst = os.path.join(dst_dir, whole_tumor_mni_file)
+        print(src, dst)
         shutil.copy(src, dst)
 
 
@@ -55,9 +58,9 @@ dst_dir = os.path.join(work_dir, "gt_whole_tumor")
 if not os.path.exists(dst_dir):
     os.mkdir(dst_dir)
 
-survival_names = survival_subject_name(paths.brats2018_training_dir)
+# survival_names = survival_subject_name(paths.brats2018_training_dir)
 
-MoveLesionsMNIMask(paths.brats2018_training_dir, dst_dir, survival_names)
+# MoveLesionsMNIMask(paths.brats2018_training_dir, dst_dir, survival_names)
 
 network_measures_dir = os.path.join(work_dir, "network_measures")
 
@@ -123,13 +126,15 @@ for idx, whole_tumor_file in enumerate(whole_tumor_files_dir):
             connectivity_threshold,
         ]
     )
-
+    print(work_dir)
     network_measure_files = [
         os.path.join(root, name)
         for root, dirs, files in os.walk(work_dir)
         for name in files
         if "network_measures" in name and name.endswith(".txt")
     ]
+    # print(network_measure_files)
+    # exit()
     network_measure_file_dst = os.path.join(
         os.path.split(network_measure_files[0])[0],
         "network_measures",

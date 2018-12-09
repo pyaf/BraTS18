@@ -120,7 +120,8 @@ def Brats2018ValidationN4ITKFilePaths(
         and name.endswith(".nii.gz")
     ]
     flair_filepaths.sort()
-
+    for i in (t1_filepaths, t1c_filepaths, t2_filepaths, flair_filepaths):
+        print(len(i))
     assert (
         len(t1_filepaths)
         == len(t1c_filepaths)
@@ -133,6 +134,7 @@ def Brats2018ValidationN4ITKFilePaths(
 
 def Brats2018TrainingN4ITKFilePaths(brats_training_path=paths.brats2018_training_dir):
     """ This fucntion gives the filepathes of all MR images with N4ITK and ground truth"""
+    import pdb; pdb.set_trace()
     t1_filepaths = [
         os.path.join(root, name)
         for root, dirs, files in os.walk(brats_training_path)
@@ -194,6 +196,8 @@ def Brats2018TrainingN4ITKFilePaths(brats_training_path=paths.brats2018_training
     ]
     seg_filepaths.sort()
 
+    for i in (t1_filepaths, t1c_filepaths, t2_filepaths, flair_filepaths, seg_filepaths):
+        print(len(i))
     assert (
         len(t1_filepaths)
         == len(t1c_filepaths)
@@ -201,7 +205,6 @@ def Brats2018TrainingN4ITKFilePaths(brats_training_path=paths.brats2018_training
         == len(flair_filepaths)
         == len(seg_filepaths)
     )
-
     return t1_filepaths, t1c_filepaths, t2_filepaths, flair_filepaths, seg_filepaths
 
 

@@ -182,7 +182,7 @@
   function analyze(scan_id){
     console.log(scan_id);
     $.ajax({
-        url: '/analyze/' + scan_id + '/',
+        url: '/analyze/{{ patient.id }}/' + scan_id + '/',
         type: 'post',
         data: {
           csrfmiddlewaretoken: '{{ csrf_token }}'

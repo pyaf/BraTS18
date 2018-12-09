@@ -37,7 +37,7 @@ args = parser.parse_args()
 if args.mode == "train":
     brats2018_path = paths.brats2018_training_dir
 elif args.mode == "valid":
-    brats2018_path = paths.brats2018_valid_dir
+    brats2018_path = paths.brats2018_validation_dir
 elif args.mode == "test":
     brats2018_path = paths.brats2018_test_dir
 else:
@@ -80,8 +80,6 @@ flair_filepaths = [
 ]
 flair_filepaths.sort()
 
-# file_paths = t1_filepaths + t1ce_filepaths + t2_filepaths + flair_filepaths
-file_paths = t1_filepaths
-
-pool = Pool(args.thread)
+file_paths = t1_filepaths + t1ce_filepaths + t2_filepaths + flair_filepaths
+pool = Pool(100)
 pool.map(N4ITK, file_paths)

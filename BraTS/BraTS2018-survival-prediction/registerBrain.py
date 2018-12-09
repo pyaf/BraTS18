@@ -33,6 +33,7 @@ def RegisterBrain(t1_path):
     print("Working on subject: %s" % t1_file[: t1_file.index("_t1_")])
     print(t1_path, paths.mni152_1mm_path, subject2mni_mat, mni2subject_mat)
     # Create the affine transformation matrix from subject space to MNI152 1mm space
+    # import pdb; pdb.set_trace()
     subprocess.call(
         [
             "flirt",
@@ -60,7 +61,7 @@ def main():
         t1_filepaths, _, _, _ = Brats2018TestingN4ITKFilePaths()
     else:
         raise ValueError('Unknown value for --mode. Use "train", "valid" or "test"')
-
+    # RegisterBrain(t1_filepaths[0])
     pool = Pool(args.thread)
 
     pool.map(RegisterBrain, t1_filepaths)
@@ -77,7 +78,7 @@ if __name__ == "__main__":
         "-t",
         "--thread",
         help="the number of thread you want to use ",
-        default=8,
+        default=4,
         type=int,
     )
     args = parser.parse_args()
